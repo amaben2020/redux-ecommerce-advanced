@@ -7,9 +7,10 @@ import {
   UserAddOutlined,
   SettingOutlined,
 } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
-  const { SubMenu } = Menu;
+  const { SubMenu, Item } = Menu;
 
   const [current, setCurrent] = React.useState('home');
 
@@ -20,26 +21,27 @@ const Navbar = () => {
   return (
     <div>
       <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-        <Menu.Item key="mail" icon={<AppstoreOutlined />}>
-          Home
-        </Menu.Item>
+        <Item key="mail" icon={<AppstoreOutlined />}>
+          <Link to="/"> Home </Link>
+        </Item>
 
-        <Menu.Item
+        <Item className="float-right" key="register" icon={<UserAddOutlined />}>
+          <Link to="/register"> Register </Link>
+        </Item>
+
+        <Item
+          style={{ marginLeft: 'auto' }}
           className="float-right"
-          key="register"
-          icon={<UserAddOutlined />}
+          key="login "
+          icon={<UserOutlined />}
         >
-          Register
-        </Menu.Item>
-
-        <Menu.Item className="float-right" key="login " icon={<UserOutlined />}>
-          Login
-        </Menu.Item>
+          <Link to="/login"> Login </Link>
+        </Item>
 
         <SubMenu key="SubMenu" icon={<SettingOutlined />} title="Dashboard">
           <Menu.ItemGroup title="Item 1">
-            <Menu.Item key="setting:1">Option 1</Menu.Item>
-            <Menu.Item key="setting:2">Option 2</Menu.Item>
+            <Item key="setting:1">Option 1</Item>
+            <Item key="setting:2">Option 2</Item>
           </Menu.ItemGroup>
         </SubMenu>
       </Menu>
