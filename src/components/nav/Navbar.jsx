@@ -17,6 +17,7 @@ const Navbar = () => {
   const handleClick = (e) => {
     setCurrent(e.key);
   };
+    
 
   return (
     <div>
