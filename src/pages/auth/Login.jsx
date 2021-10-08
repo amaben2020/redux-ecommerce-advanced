@@ -51,22 +51,22 @@ const Login = ({ history }) => {
       //get the token value
       const idTokenResult = await user.getIdTokenResult();
       const { token } = idTokenResult;
+      createOrUpdateUser(token)
+        .then((res) => {
+          console.log('reduxDispatchj', res);
 
-      const res = await createOrUpdateUser(token);
-      setLoading(false);
-      console.log(res);
-
-      // await createOrUpdateUser(token)
-      //   .then((res) => console.log(res))
-      //   .catch();
-
-      // dispatch({
-      //   type: 'LOGGED_IN_USER',
-      //   payload: {
-      //     email: user.email,
-      //     token: token,
-      //   },
-      // });
+          dispatch({
+            type: 'LOGGED_IN_USER',
+            payload: {
+              email: res.data.email,
+              token: token,
+              name: res.data.name,
+              role: res.data.role,
+              _id: res.data._id,
+            },
+          });
+        })
+        .catch();
       // history.push('/');
     } catch (error) {
       toast.error(error.message);
@@ -117,13 +117,22 @@ const Login = ({ history }) => {
       .then(async (result) => {
         const { user } = result;
         const idTokenResult = await user.getIdTokenResult();
-        dispatch({
-          type: 'LOGGED_IN_USER',
-          payload: {
-            email: user.email,
-            token: idTokenResult,
-          },
-        });
+        createOrUpdateUser(idTokenResult)
+          .then((res) => {
+            console.log(res);
+
+            dispatch({
+              type: 'LOGGED_IN_USER',
+              payload: {
+                email: res.data.email,
+                token: idTokenResult,
+                name: res.data.name,
+                role: res.data.role,
+                _id: res.data._id,
+              },
+            });
+          })
+          .catch();
         history.push('/');
       })
       .catch((err) => {
