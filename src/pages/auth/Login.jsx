@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { auth } from '../../firebase/firebase.ts';
 import { MailOutlined, GoogleOutlined } from '@ant-design/icons';
@@ -7,6 +7,22 @@ import { useDispatch } from 'react-redux';
 import { googleAuthProvider } from '../../firebase/firebase';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
+
+const url = `${process.env.REACT_APP_API}/create-or-update-user`;
+
+const createOrUpdateUser = async (token) => {
+  return await axios.post(
+    url,
+    {},
+    {
+      headers: {
+        authToken: token,
+      },
+    }
+  );
+};
+
 const Login = ({ history }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -15,7 +31,6 @@ const Login = ({ history }) => {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => ({ ...state }));
-  console.log(user);
 
   useEffect(() => {
     if (user && user.token) {
@@ -30,22 +45,30 @@ const Login = ({ history }) => {
     setLoading(true);
     try {
       const result = await auth.signInWithEmailAndPassword(email, password);
-      console.log(result);
+      console.log('Login result', result);
       //destructure user object from result
       const { user } = result;
       //get the token value
       const idTokenResult = await user.getIdTokenResult();
       const { token } = idTokenResult;
-      dispatch({
-        type: 'LOGGED_IN_USER',
-        payload: {
-          email: user.email,
-          token: token,
-        },
-      });
-      history.push('/');
+
+      const res = await createOrUpdateUser(token);
+      setLoading(false);
+      console.log(res);
+
+      // await createOrUpdateUser(token)
+      //   .then((res) => console.log(res))
+      //   .catch();
+
+      // dispatch({
+      //   type: 'LOGGED_IN_USER',
+      //   payload: {
+      //     email: user.email,
+      //     token: token,
+      //   },
+      // });
+      // history.push('/');
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
       setLoading(false);
     }

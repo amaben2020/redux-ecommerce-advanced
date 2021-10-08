@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-//import { getAuth, sendSignInLinkToEmail } from 'firebase/auth';
 import { auth } from '../../firebase/firebase.ts';
 const Register = ({ history }) => {
   const [email, setEmail] = useState('');
-
   const { user } = useSelector((state) => ({ ...state }));
-  console.log(user);
 
   useEffect(() => {
     if (user && user.token) {
@@ -23,7 +20,7 @@ const Register = ({ history }) => {
       url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
       handleCodeInApp: true,
     };
-    //const auth = getAuth();
+
     auth
       .sendSignInLinkToEmail(email, config)
       .then(() => {
@@ -36,7 +33,6 @@ const Register = ({ history }) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         toast.error(errorCode, errorMessage);
-        // ...
       });
   };
 

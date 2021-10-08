@@ -1,11 +1,7 @@
 import './App.css';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Routes from './routes/Routes';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { rootReducer } from './redux/reducers';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { auth } from './firebase/firebase';
@@ -13,8 +9,7 @@ import { auth } from './firebase/firebase';
 const App = () => {
   const dispatch = useDispatch();
 
-  //@ts-ignore
-  const store = createStore(rootReducer, composeWithDevTools());
+  //This useEffect simply puts the user details when the app lunches, it automatically tries to login a user if logged out
 
   useEffect(() => {
     //onAuthStateChanged exposes us to the user information
@@ -22,7 +17,6 @@ const App = () => {
       if (user) {
         //getIdTokenResult gives us the userToken
         const idTokenResult = await user.getIdTokenResult();
-        console.log(user);
         dispatch({
           type: 'LOGGED_IN_USER',
           payload: {
@@ -30,6 +24,8 @@ const App = () => {
             token: idTokenResult.token,
           },
         });
+      } else if (!user) {
+        toast.error('Please sign in to enjoy app functionality');
       }
     });
 
