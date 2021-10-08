@@ -10,12 +10,14 @@ import {
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import firebase from 'firebase';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 const Navbar = () => {
   const history = useHistory();
 
   const { SubMenu, Item } = Menu;
+
+  const { user } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
 
