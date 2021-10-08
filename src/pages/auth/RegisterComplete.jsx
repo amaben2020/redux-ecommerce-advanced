@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import {
-  getAuth,
-  sendSignInLinkToEmail,
-  signInWithEmailLink,
-} from 'firebase/auth';
 import { auth } from '../../firebase/firebase.ts';
 
 const Register = ({ history }) => {
