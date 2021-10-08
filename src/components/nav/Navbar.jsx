@@ -17,7 +17,9 @@ const Navbar = () => {
 
   const { SubMenu, Item } = Menu;
 
-  const { user } = useSelector((state) => state.user);
+  //const { user } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => ({ ...state }));
+  console.log(user);
 
   const dispatch = useDispatch();
 
@@ -44,28 +46,43 @@ const Navbar = () => {
           <Link to="/"> Home </Link>
         </Item>
 
-        <Item className="float-right" key="register" icon={<UserAddOutlined />}>
-          <Link to="/register"> Register </Link>
-        </Item>
+        {!user && (
+          <Item
+            className="float-right"
+            key="register"
+            icon={<UserAddOutlined />}
+          >
+            <Link to="/register"> Register </Link>
+          </Item>
+        )}
 
-        <Item
-          style={{ marginLeft: 'auto' }}
-          className="float-right"
-          key="login "
-          icon={<UserOutlined />}
-        >
-          <Link to="/login"> Login </Link>
-        </Item>
+        {!user && (
+          <Item
+            style={{ marginLeft: 'auto' }}
+            className="float-right"
+            key="login "
+            icon={<UserOutlined />}
+          >
+            <Link to="/login"> Login </Link>
+          </Item>
+        )}
 
-        <SubMenu key="SubMenu" icon={<SettingOutlined />} title="Dashboard">
-          <Menu.ItemGroup title="Item 1">
-            <Item key="setting:1">Option 1</Item>
-            <Item key="setting:2">Option 2</Item>
-            <Item key="setting:3" onClick={logout} icon={<LogoutOutlined />}>
-              Logout
-            </Item>
-          </Menu.ItemGroup>
-        </SubMenu>
+        {user && (
+          <SubMenu
+            key="SubMenu"
+            style={{ marginLeft: 'auto' }}
+            icon={<SettingOutlined />}
+            title={user.email && user.email.split('@')[0]}
+          >
+            <Menu.ItemGroup title="Item 1">
+              <Item key="setting:1">Option 1</Item>
+              <Item key="setting:2">Option 2</Item>
+              <Item key="setting:3" onClick={logout} icon={<LogoutOutlined />}>
+                Logout
+              </Item>
+            </Menu.ItemGroup>
+          </SubMenu>
+        )}
       </Menu>
     </div>
   );

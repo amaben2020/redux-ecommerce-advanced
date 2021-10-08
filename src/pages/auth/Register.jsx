@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-
+import { useSelector } from 'react-redux';
 //import { getAuth, sendSignInLinkToEmail } from 'firebase/auth';
 import { auth } from '../../firebase/firebase.ts';
-const Register = () => {
+const Register = ({ history }) => {
   const [email, setEmail] = useState('');
+
+  const { user } = useSelector((state) => ({ ...state }));
+  console.log(user);
+
+  useEffect(() => {
+    if (user && user.token) {
+      //sometimes null value is considered as true
+      history.push('/');
+    }
+    //firebase may not give the user immediately so we must watch for the user
+  }, [history, user]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

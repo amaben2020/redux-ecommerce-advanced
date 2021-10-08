@@ -1,16 +1,29 @@
 import { Button } from 'antd';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { auth } from '../../firebase/firebase.ts';
 import { MailOutlined, GoogleOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { googleAuthProvider } from '../../firebase/firebase';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 const Login = ({ history }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
+
+  const { user } = useSelector((state) => ({ ...state }));
+  console.log(user);
+
+  useEffect(() => {
+    if (user && user.token) {
+      //sometimes null value is considered as true
+      history.push('/');
+    }
+    //firebase may not give the user immediately so we must watch for the user
+  }, [history, user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -116,6 +129,10 @@ const Login = ({ history }) => {
           >
             Google Login
           </Button>
+
+          <Link to="/forgot/password" className="float-right text-danger">
+            Forgot Password
+          </Link>
         </div>
       </div>
     </div>
