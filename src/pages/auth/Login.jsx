@@ -7,21 +7,7 @@ import { useDispatch } from 'react-redux';
 import { googleAuthProvider } from '../../firebase/firebase';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
-
-const url = `${process.env.REACT_APP_API}/create-or-update-user`;
-
-const createOrUpdateUser = async (token) => {
-  return await axios.post(
-    url,
-    {},
-    {
-      headers: {
-        authToken: token,
-      },
-    }
-  );
-};
+import { createOrUpdateUser } from '../../utils/auth';
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState('');
@@ -53,8 +39,6 @@ const Login = ({ history }) => {
       const { token } = idTokenResult;
       createOrUpdateUser(token)
         .then((res) => {
-          console.log('reduxDispatchj', res);
-
           dispatch({
             type: 'LOGGED_IN_USER',
             payload: {
