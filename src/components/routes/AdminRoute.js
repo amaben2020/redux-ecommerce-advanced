@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Link } from 'react-router';
+import { Route } from 'react-router';
 import { useSelector } from 'react-redux';
 import LoadingToRedirect from './LoadingToRedirect';
 import { currentAdmin } from '../../utils/auth';
@@ -24,7 +24,7 @@ const AdminRoute = ({ children, ...rest }) => {
   }, [user]);
 
   return ok ? (
-    <Route {...rest} render={() => children} />
+    <Route {...rest} />
   ) : (
     <h1 className="text-danger">
       {' '}
