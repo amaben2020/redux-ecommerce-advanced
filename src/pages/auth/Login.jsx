@@ -26,12 +26,21 @@ const Login = ({ history }) => {
     //firebase may not give the user immediately so we must watch for the user
   }, [history, user]);
 
+  //role based redirect
+  const roleBasedRedirect = (res) => {
+    if (res.data.role === 'admin') {
+      history.push('/admin/dashboard');
+    } else {
+      history.push('/user/history');
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       const result = await auth.signInWithEmailAndPassword(email, password);
-      console.log('Login result', result);
+
       //destructure user object from result
       const { user } = result;
       //get the token value
@@ -49,6 +58,8 @@ const Login = ({ history }) => {
               _id: res.data._id,
             },
           });
+          //role based redirect
+          roleBasedRedirect(res);
         })
         .catch();
       // history.push('/');
@@ -115,9 +126,11 @@ const Login = ({ history }) => {
                 _id: res.data._id,
               },
             });
+            roleBasedRedirect(res);
           })
+
           .catch();
-        history.push('/');
+        // history.push('/');
       })
       .catch((err) => {
         toast.error(err);

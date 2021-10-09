@@ -5,6 +5,7 @@ import Routes from './routes/Routes';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { auth } from './firebase/firebase';
+import { currentUser } from './utils/auth';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -17,13 +18,21 @@ const App = () => {
       if (user) {
         //getIdTokenResult gives us the userToken
         const idTokenResult = await user.getIdTokenResult();
-        dispatch({
-          type: 'LOGGED_IN_USER',
-          payload: {
-            email: user.email,
-            token: idTokenResult.token,
-          },
-        });
+        currentUser(idTokenResult.token)
+          .then((res: any) => {
+            console.log(res);
+            dispatch({
+              type: 'LOGGED_IN_USER',
+              payload: {
+                name: res.data.name,
+                token: idTokenResult.token,
+                _id: res.data.id,
+                email: res.data.email,
+                role: res.data.role,
+              },
+            });
+          })
+          .catch();
       } else if (!user) {
         toast.error('Please sign in to enjoy app functionality');
       }
