@@ -2,9 +2,9 @@ import React from 'react';
 
 const AdminDashboard = () => {
   return (
-    <>
-      <p>Admin dashboard viewed only by admin</p>
-    </>
+    <div>
+      <p style={{ color: 'red' }}>Admin dashboard viewed only by admin</p>
+    </div>
   );
 };
 

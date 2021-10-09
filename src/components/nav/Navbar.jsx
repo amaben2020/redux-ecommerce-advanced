@@ -1,7 +1,6 @@
 import React from 'react';
 import { Menu } from 'antd';
 import {
-  HomeOutlined,
   UserOutlined,
   AppstoreOutlined,
   UserAddOutlined,
@@ -9,7 +8,6 @@ import {
   LogoutOutlined,
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
-import firebase from 'firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 const Navbar = () => {

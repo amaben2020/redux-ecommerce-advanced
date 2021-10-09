@@ -1,7 +1,7 @@
 import './App.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Routes from './routes/Routes';
+import Routes from './routes/Routes.jsx';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { auth } from './firebase/firebase';
@@ -40,7 +40,7 @@ const App = () => {
 
     //cleanup
     return () => unsubscribe();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
