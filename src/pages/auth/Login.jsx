@@ -26,7 +26,7 @@ const Login = ({ history }) => {
     //firebase may not give the user immediately so we must watch for the user
   }, [history, user]);
 
-  //role based redirect
+  //role based redirect function
   const roleBasedRedirect = (res) => {
     if (res.data.role === 'admin') {
       history.push('/admin/dashboard');
@@ -40,7 +40,6 @@ const Login = ({ history }) => {
     setLoading(true);
     try {
       const result = await auth.signInWithEmailAndPassword(email, password);
-
       //destructure user object from result
       const { user } = result;
       //get the token value

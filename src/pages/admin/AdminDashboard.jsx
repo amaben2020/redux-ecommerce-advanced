@@ -1,9 +1,15 @@
 import React from 'react';
+import AdminNav from '../../components/nav/AdminNav';
 
 const AdminDashboard = () => {
   return (
-    <div>
-      <p style={{ color: 'red' }}>Admin dashboard viewed only by admin</p>
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-md-2" style={{ border: '2px solid gray' }}>
+          <AdminNav />
+        </div>
+        <div className="col">Admin Dashboard</div>
+      </div>
     </div>
   );
 };

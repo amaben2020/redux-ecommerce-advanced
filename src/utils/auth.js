@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 const url = `${process.env.REACT_APP_API}/create-or-update-user`;
 const url2 = `${process.env.REACT_APP_API}/current-user`;
 const url3 = `${process.env.REACT_APP_API}/current-admin`;

@@ -20,7 +20,6 @@ const App = () => {
         const idTokenResult = await user.getIdTokenResult();
         currentUser(idTokenResult.token)
           .then((res: any) => {
-            console.log(res);
             dispatch({
               type: 'LOGGED_IN_USER',
               payload: {

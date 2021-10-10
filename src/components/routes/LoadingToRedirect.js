@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router';
 const LoadingToRedirect = () => {
-  const [count, setCount] = useState(5);
+  const [count, setCount] = useState(3);
 
   const history = useHistory();
 
@@ -18,7 +18,14 @@ const LoadingToRedirect = () => {
   }, [count, history]);
   return (
     <div className="container p-5 text-center">
-      <p>Redirecting you in {count} secs</p>
+      <p>
+        Redirecting you in{' '}
+        <span className="text-danger" style={{ fontSize: '5rem' }}>
+          {' '}
+          {count}
+        </span>{' '}
+        secs
+      </p>
     </div>
   );
 };

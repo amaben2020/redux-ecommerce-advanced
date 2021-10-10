@@ -8,7 +8,6 @@ const ForgotPassword = ({ history }) => {
   const [loading, setLoading] = useState(false);
 
   const { user } = useSelector((state) => ({ ...state }));
-  console.log(user);
 
   useEffect(() => {
     if (user && user.token) {

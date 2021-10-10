@@ -12,6 +12,8 @@ import WishList from '../pages/user/WishList';
 import Password from '../pages/user/Password';
 import AdminDashboard from '../pages/admin/AdminDashboard';
 import AdminRoute from '../components/routes/AdminRoute';
+import CategoryCreate from '../pages/admin/category/CategoryCreate';
+import CategoryUpdate from '../pages/admin/category/CategoryUpdate';
 
 const Routes = () => {
   return (
@@ -23,8 +25,17 @@ const Routes = () => {
         <Route exact path={'/register'} component={Register} />
         <Route exact path={'/register/complete'} component={Complete} />
         <Route exact path={'/forgot/password'} component={ForgotPassword} />
-
-        <AdminRoute path={'/admin/dashboard'} component={AdminDashboard} />
+        <AdminRoute exact path={'/admin/category'} component={CategoryCreate} />
+        <AdminRoute
+          exact
+          path={'/admin/dashboard'}
+          component={AdminDashboard}
+        />
+        <AdminRoute
+          exact
+          path={'/admin/category/:slug'}
+          component={CategoryUpdate}
+        />
 
         <UserRoute>
           <Route exact path={'/user/history'} component={History} />
