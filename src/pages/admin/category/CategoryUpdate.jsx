@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { updateCategory, getCategory } from '../../../utils/category';
 import { useParams } from 'react-router';
+import CategoryForm from '../../../components/forms/CategoryForm';
 const CategoryUpdate = ({ history, match }) => {
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
@@ -25,45 +26,22 @@ const CategoryUpdate = ({ history, match }) => {
     loadCategory();
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    updateCategory(match.params.slug, { name }, user.token)
+    await updateCategory(match.params.slug, { name }, user.token)
       .then((res) => {
-        console.log(res);
         setLoading(false);
         setName('');
         toast.success(`${res.data.name} is updated`);
         history.push('/admin/category');
-        // loadCategories();
       })
       .catch((err) => {
         console.log(err);
         setLoading(false);
         if (err.response.status === 400) toast.error(err);
       });
-  };
-
-  const CategoryForm = () => {
-    return (
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="Name"></label>
-          <input
-            type="text"
-            className="form-control"
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-            autoFocus
-            required
-          />
-          <br />
-
-          <button className="btn btn-outline-primary">Save</button>
-        </div>
-      </form>
-    );
   };
 
   return (
@@ -78,9 +56,12 @@ const CategoryUpdate = ({ history, match }) => {
           ) : (
             <h4>Update category</h4>
           )}
-          {/* {CategoryForm()} */}
 
-          <CategoryForm />
+          <CategoryForm
+            name={name}
+            setName={setName}
+            handleSubmit={handleSubmit}
+          />
         </div>
       </div>
     </div>
