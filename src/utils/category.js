@@ -14,6 +14,10 @@ export const getCategory = async (slug, authtoken) => {
   });
 };
 
+export const getCategorySubs = async (_id) => {
+  return await axios.get(`${process.env.REACT_APP_API}/category/subs/${_id}`);
+};
+
 export const removeCategory = async (slug, authtoken) => {
   return await axios.delete(`${process.env.REACT_APP_API}/category/${slug}`, {
     headers: {

@@ -14,6 +14,9 @@ import AdminDashboard from '../pages/admin/AdminDashboard';
 import AdminRoute from '../components/routes/AdminRoute';
 import CategoryCreate from '../pages/admin/category/CategoryCreate';
 import CategoryUpdate from '../pages/admin/category/CategoryUpdate';
+import SubCreate from '../pages/admin/category/SubCreate';
+import SubUpdate from '../pages/admin/category/SubUpdate';
+import ProductCreate from '../product/ProductCreate';
 
 const Routes = () => {
   return (
@@ -36,6 +39,10 @@ const Routes = () => {
           path={'/admin/category/:slug'}
           component={CategoryUpdate}
         />
+        <AdminRoute exact path={'/admin/product'} component={ProductCreate} />
+        <AdminRoute exact path={'/admin/sub/:slug'} component={SubUpdate} />
+
+        <AdminRoute exact path={'/admin/sub'} component={SubCreate} />
 
         <UserRoute>
           <Route exact path={'/user/history'} component={History} />

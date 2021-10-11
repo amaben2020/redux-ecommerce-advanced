@@ -1,0 +1,15 @@
+export const initialState = {
+  title: 'Macbook Pro 2022',
+  description: 'This is the best apple product',
+  price: '4500',
+  category: '',
+  categories: [],
+  subs: [],
+  shipping: 'Yes',
+  images: [],
+  colors: ['Black', 'Brown', 'Silver', 'White', 'Blue'],
+  brands: ['Apple', 'Samsung', 'Lenovo', 'Asus', 'Microsoft'],
+  quantity: '50',
+  color: 'Silver',
+  brand: 'Apple',
+};
