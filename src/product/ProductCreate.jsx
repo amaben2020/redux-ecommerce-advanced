@@ -4,18 +4,17 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { createProduct } from '../utils/product';
 import { initialState } from './ProductValues.ts';
-import { messageDisplay } from '../utils/toastMessage';
 import ProductCreateForm from '../components/forms/ProductCreateForm';
 import { getCategories, getCategorySubs } from '../utils/category';
+import FileUpload from '../components/forms/FileUpload';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const ProductCreate = ({ history }) => {
   const [values, setValues] = useState(initialState);
-
   const { user } = useSelector((state) => ({ ...state }));
-
-  const [categories, setCategories] = useState([]);
-
   const [subOptions, setSubOptions] = useState([]);
+  const [showSub, setShowSub] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     loadAllCategories();
@@ -52,14 +51,17 @@ const ProductCreate = ({ history }) => {
 
   const handleCategoryChange = (e) => {
     e.preventDefault();
-    setValues({ ...values, category: e.target.value });
+    setValues({ ...values, subs: [], category: e.target.value });
     getCategorySubs(e.target.value).then((res) => {
       console.log('SUBS OPTION ON CATEGORY CLICK,', res);
       setSubOptions(res.data);
     });
+    setShowSub(true);
 
     console.log('Clicked category', e.target.value);
   };
+
+  console.log(subOptions);
 
   return (
     <div className="container-fluid">
@@ -68,14 +70,30 @@ const ProductCreate = ({ history }) => {
           <AdminNav />
         </div>{' '}
         <div className="col-md-10">
-          <h4>Product create</h4>
-          {JSON.stringify(values.categories)}
+          {loading ? (
+            <LoadingOutlined className="text-danger h1" />
+          ) : (
+            <h4>Product create</h4>
+          )}
+          {/* {JSON.stringify(values.categories)} */}
+
+          <div className="p-3">
+            <FileUpload
+              values={values}
+              setValues={setValues}
+              setLoading={setLoading}
+            />
+          </div>
           <ProductCreateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
             values={values}
             handleCategoryChange={handleCategoryChange}
+            subOptions={subOptions}
+            showSub={showSub}
+            setValues={setValues}
           />
+
           <hr />
         </div>
       </div>

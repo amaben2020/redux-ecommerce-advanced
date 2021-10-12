@@ -10,13 +10,9 @@ import { messageDisplay } from '../../../utils/toastMessage';
 const SubUpdate = ({ match, history }) => {
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
-
   const [categories, setCategories] = useState([]);
-
   const [category, setCategory] = useState([]);
-
   const [parent, setParent] = useState('');
-
   const { user } = useSelector((state) => ({ ...state }));
 
   const loadCategories = () =>
@@ -25,6 +21,7 @@ const SubUpdate = ({ match, history }) => {
   const loadSub = async () => {
     try {
       const value = await getSub(match.params.slug, user.token);
+      console.log(value);
       setName(value.data?.name);
       //parent is under category
       setParent(value.data?.parent);

@@ -1,10 +1,15 @@
 import React from 'react';
+import { Select } from 'antd';
 
+const { Option } = Select;
 const ProductCreateForm = ({
   handleChange,
   handleSubmit,
   values,
   handleCategoryChange,
+  setValues,
+  subOptions,
+  showSub,
 }) => {
   const {
     title,
@@ -18,6 +23,7 @@ const ProductCreateForm = ({
     color,
     brand,
     brands,
+
     categories,
     quantity,
   } = values;
@@ -106,10 +112,11 @@ const ProductCreateForm = ({
         <div>
           <label htmlFor="Category"></label>
           <select
-            className="form-control"
+            className="form-control mb-3"
             name="category"
             onChange={handleCategoryChange}
           >
+            <option value="">Please select a category</option>
             {categories.map((category) => (
               <option value={category._id} key={category._id}>
                 {category.name}
@@ -117,7 +124,28 @@ const ProductCreateForm = ({
             ))}
           </select>
         </div>
-
+        <br />
+        {showSub && (
+          <div>
+            <label htmlFor="Sub categories"></label>
+            <Select
+              mode="multiple"
+              style={{ width: '100%' }}
+              placeholder="please select value"
+              value={subs}
+              onChange={(value) => setValues({ ...values, subs: value })}
+            >
+              {subOptions.length &&
+                subOptions.map((s) => (
+                  <Option value={s._id} key={s._id}>
+                    {s.name}{' '}
+                  </Option>
+                ))}
+            </Select>
+          </div>
+        )}
+        <br />
+        {JSON.stringify(values.subs)}
         <button type="submit" className="btn btn-outline-info">
           Save
         </button>

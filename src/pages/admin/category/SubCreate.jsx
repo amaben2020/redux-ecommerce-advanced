@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import AdminNav from '../../../components/nav/AdminNav';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import { createSub, removeSub, getSub, getSubs } from '../../../utils/sub';
+import { createSub, removeSub, getSubs } from '../../../utils/sub';
 import { Link } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import CategoryForm from '../../../components/forms/CategoryForm';
@@ -11,15 +11,11 @@ import { getCategories } from '../../../utils/category';
 const SubCreate = () => {
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
-
   const [categories, setCategories] = useState([]);
-
   //one user clicked
   const [category, setCategory] = useState([]);
   const [keyword, setKeyword] = useState('');
-
   const [subs, setSubs] = useState([]);
-
   const { user } = useSelector((state) => ({ ...state }));
 
   const loadCategories = () =>
