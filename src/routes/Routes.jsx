@@ -19,6 +19,7 @@ import SubUpdate from '../pages/admin/category/SubUpdate';
 import ProductCreate from '../product/ProductCreate';
 import AllProducts from '../product/AllProducts';
 import ProductUpdate from '../product/ProductUpdate';
+import Product from '../pages/Product';
 
 const Routes = () => {
   return (
@@ -28,6 +29,7 @@ const Routes = () => {
         <Route exact path={['/', '/home']} component={Home} />
         <Route exact path={'/login'} component={Login} />
         <Route exact path={'/register'} component={Register} />
+        <Route exact path={'/product/:slug'} component={Product} />
         <Route exact path={'/register/complete'} component={Complete} />
         <Route exact path={'/forgot/password'} component={ForgotPassword} />
         <AdminRoute exact path={'/admin/category'} component={CategoryCreate} />

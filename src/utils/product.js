@@ -41,6 +41,19 @@ export const updateProduct = async (slug, product, authtoken) => {
   );
 };
 
+//putting the body inside {} makes you gain access to req.body. in the backend
+export const productStar = async (productId, star, authtoken) => {
+  return await axios.put(
+    `${process.env.REACT_APP_API}/product/star/${productId}`,
+    { star },
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );
+};
+
 export const getProducts = async (sort, order, page) => {
   return await axios.post(`${process.env.REACT_APP_API}/products`, {
     sort,

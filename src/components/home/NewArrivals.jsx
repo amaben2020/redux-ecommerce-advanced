@@ -3,6 +3,7 @@ import LoadingCard from '../cards/LoadingCard';
 import ProductCard from '../cards/ProductCard';
 import { getProducts, getProductsCount } from '../../utils/product';
 import { Pagination } from 'antd';
+
 const NewArrivals = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -13,9 +14,10 @@ const NewArrivals = () => {
   //number of items to be displayed
   const [itemCount, setItemCount] = useState(3);
 
-  //total products number in dbase
+  //total products number in dbase i.e 9, 10 ,11 ... total products
   const [productsCount, setProductsCount] = useState(0);
 
+  //useEffect runs based on ordering
   useEffect(() => {
     loadAllProducts();
   }, [page]);
@@ -25,6 +27,8 @@ const NewArrivals = () => {
       setProductsCount(res.data);
     });
   }, []);
+
+  const [sort, setSort] = useState('asc');
 
   const loadAllProducts = () => {
     setLoading(true);

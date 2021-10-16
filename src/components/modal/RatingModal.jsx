@@ -1,0 +1,49 @@
+import React, { useState } from 'react';
+import { Modal, Button } from 'antd';
+import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import { StarOutlined } from '@ant-design/icons';
+import { useHistory } from 'react-router';
+import { useParams } from 'react-router';
+const RatingModal = ({ children }) => {
+  const { user } = useSelector((state) => ({ ...state }));
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const history = useHistory();
+  let { slug } = useParams();
+  const params = useParams();
+
+  const handleModal = () => {
+    if (user && user.token) {
+      setModalVisible(true);
+    } else {
+      history.push({
+        pathname: '/login',
+        //the current page you're on and wanna be returned to when you get token
+        state: { from: `/product/${slug}` },
+      });
+    }
+  };
+
+  return (
+    <>
+      <div onClick={handleModal}>
+        <StarOutlined className="text-danger" /> <br />
+        {user ? 'Leave rating' : 'Login to leave rating'}
+      </div>
+      <Modal
+        visible={modalVisible}
+        title="Leave your rating"
+        onOk={() => {
+          setModalVisible(false);
+          toast.success('Thanks for your review. It will appear soon');
+        }}
+        onCancel={() => setModalVisible(false)}
+      >
+        {children}
+      </Modal>
+    </>
+  );
+};
+
+export default RatingModal;

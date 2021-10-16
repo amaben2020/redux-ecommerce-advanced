@@ -19,19 +19,33 @@ const Login = ({ history }) => {
   const { user } = useSelector((state) => ({ ...state }));
 
   useEffect(() => {
-    if (user && user.token) {
-      //sometimes null value is considered as true
-      history.push('/');
+    let intended = history.location.state;
+
+    if (intended) {
+      return;
+    } else {
+      if (user && user.token) {
+        //sometimes null value is considered as true
+        history.push('/');
+      }
     }
+
     //firebase may not give the user immediately so we must watch for the user
   }, [history, user]);
 
   //role based redirect function
   const roleBasedRedirect = (res) => {
-    if (res.data.role === 'admin') {
-      history.push('/admin/dashboard');
+    //check if intended
+    let intended = history.location.state;
+
+    if (intended) {
+      history.push(intended.from);
     } else {
-      history.push('/user/history');
+      if (res.data.role === 'admin') {
+        history.push('/admin/dashboard');
+      } else {
+        history.push('/user/history');
+      }
     }
   };
 
