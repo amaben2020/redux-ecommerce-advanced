@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Tabs } from 'antd';
 import { Link } from 'react-router-dom';
 import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
 import Laptop from './../../images/laptop.png';
 import ProductListItems from './ProductListItems';
@@ -13,7 +13,6 @@ import { showAverage } from '../../utils/rating';
 const SingleProduct = ({ product, onStarClick, star }) => {
   const { title, images, description, _id } = product;
 
-  console.log(product.ratings);
   const { Meta } = Card;
   const { TabPane } = Tabs;
   return (
@@ -40,11 +39,11 @@ const SingleProduct = ({ product, onStarClick, star }) => {
       <div className="col-md-5">
         <h1 className="bg-info p-3">{title}</h1>
 
-        <div>
-          {product && product.ratings.length > 0 && product.length
+        {/* <div>
+          {product && product.ratings.length > 0 && product.ratings
             ? showAverage(product)
             : 'No rating yet'}
-        </div>
+        </div> */}
         <Card
           actions={[
             <>

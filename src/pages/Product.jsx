@@ -1,18 +1,27 @@
 import { react } from '@babel/types';
 import { useState, useEffect } from 'react';
 import SingleProduct from '../components/cards/SingleProduct';
-import { getProduct, productStar } from '../utils/product';
+import { getProduct, getRelated, productStar } from '../utils/product';
 import { useSelector } from 'react-redux';
+import ProductCard from '../components/cards/ProductCard';
 
+//This is a parent component
 const Product = ({ match }) => {
   const [product, setProduct] = useState({});
   const [star, setStar] = useState(0);
   const { slug } = match.params;
   const { user } = useSelector((state) => ({ ...state }));
-  console.log(user);
+  const [related, setRelated] = useState([]);
+
+  console.log('related', related);
 
   const loadSingleProduct = () => {
-    getProduct(slug).then((res) => setProduct(res.data));
+    getProduct(slug).then((res) => {
+      setProduct(res.data);
+      //load related
+      console.log('seeing what data looks like', res);
+      getRelated(res.data._id).then((res) => setRelated(res.data));
+    });
   };
 
   useEffect(() => {
@@ -36,8 +45,7 @@ const Product = ({ match }) => {
     setStar(newRating);
     productStar(name, newRating, user.token)
       .then((res) => {
-        console.log(res.data);
-        loadSingleProduct(); //if you wanna show updated rating in realtime
+        loadSingleProduct(); //if you wanna show updated rating in realtime i.e reloading data
       })
       .catch((err) => console.log(err));
   };
@@ -55,6 +63,18 @@ const Product = ({ match }) => {
         <div className="col text-center pt-5 pb-5">
           <hr />
           <h4>RELATED Products</h4>
+
+          <div className="row">
+            <div className="row pb-5">
+              {related.length
+                ? related.map((related) => (
+                    <div key={related._id} className="col-md-4">
+                      <ProductCard product={related} />
+                    </div>
+                  ))
+                : 'No products found'}
+            </div>
+          </div>
           <hr />
         </div>
       </div>

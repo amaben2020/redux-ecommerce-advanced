@@ -20,6 +20,8 @@ import ProductCreate from '../product/ProductCreate';
 import AllProducts from '../product/AllProducts';
 import ProductUpdate from '../product/ProductUpdate';
 import Product from '../pages/Product';
+import CategoryList from '../components/category/CategoryList';
+import CategoryHome from '../pages/category/CategoryHome';
 
 const Routes = () => {
   return (
@@ -32,6 +34,7 @@ const Routes = () => {
         <Route exact path={'/product/:slug'} component={Product} />
         <Route exact path={'/register/complete'} component={Complete} />
         <Route exact path={'/forgot/password'} component={ForgotPassword} />
+        <Route exact path={'/category/:slug'} component={CategoryHome} />
         <AdminRoute exact path={'/admin/category'} component={CategoryCreate} />
         <AdminRoute
           exact
