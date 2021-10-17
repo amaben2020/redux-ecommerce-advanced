@@ -6,10 +6,12 @@ import {
   UserAddOutlined,
   SettingOutlined,
   LogoutOutlined,
+  ShoppingOutlined,
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import Search from './../../components/forms/Search';
 const Navbar = () => {
   const history = useHistory();
 
@@ -42,7 +44,9 @@ const Navbar = () => {
         <Item key="mail" icon={<AppstoreOutlined />}>
           <Link to="/"> Home </Link>
         </Item>
-
+        <Item key="shop" icon={<ShoppingOutlined />}>
+          <Link to="/shop"> Shop </Link>
+        </Item>
         {!user && (
           <Item
             className="float-right"
@@ -92,6 +96,9 @@ const Navbar = () => {
             </Menu.ItemGroup>
           </SubMenu>
         )}
+        <span className="ml-auto p-1">
+          <Search />
+        </span>
       </Menu>
     </div>
   );

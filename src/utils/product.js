@@ -17,6 +17,10 @@ export const getProductsByCount = async (count) => {
   return await axios.get(`${process.env.REACT_APP_API}/products/${count}`);
 };
 
+export const fetchProductsByFilter = async (arg) => {
+  return await axios.post(`${process.env.REACT_APP_API}/search/filters`, arg);
+};
+
 export const getProduct = async (slug) => {
   return await axios.get(`${process.env.REACT_APP_API}/product/${slug}`);
 };

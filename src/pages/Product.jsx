@@ -7,19 +7,24 @@ import ProductCard from '../components/cards/ProductCard';
 
 //This is a parent component
 const Product = ({ match }) => {
-  const [product, setProduct] = useState({});
+  //better for handling complex json responses
+  const [data, setData] = useState({ prod: {} });
+  // const [product, setProduct] = useState({});
+  const [related, setRelated] = useState([]);
   const [star, setStar] = useState(0);
   const { slug } = match.params;
   const { user } = useSelector((state) => ({ ...state }));
-  const [related, setRelated] = useState([]);
 
   console.log('related', related);
 
   const loadSingleProduct = () => {
     getProduct(slug).then((res) => {
-      setProduct(res.data);
+      let myData = res.data;
+      setData({ prod: myData });
+      // setProduct(res.data);
       //load related
       console.log('seeing what data looks like', res);
+      //The related endpoint uses the product's id to fetch products in same category as it
       getRelated(res.data._id).then((res) => setRelated(res.data));
     });
   };
@@ -30,8 +35,8 @@ const Product = ({ match }) => {
 
   useEffect(() => {
     //if product already has rating
-    if (product.ratings && user) {
-      let existingRatingObject = product.ratings.find(
+    if (data.prod.ratings && user) {
+      let existingRatingObject = data.prod.ratings.find(
         (element) => element.postedBy.toString() === user._id.toString()
       );
       console.log('existing', existingRatingObject);
@@ -53,7 +58,7 @@ const Product = ({ match }) => {
     <div className="container-fluid">
       <div className="row pt-4">
         <SingleProduct
-          product={product}
+          product={data.prod}
           onStarClick={onStarClick}
           star={star}
         />
