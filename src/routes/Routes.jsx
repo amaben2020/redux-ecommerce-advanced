@@ -24,11 +24,16 @@ import CategoryList from '../components/category/CategoryList';
 import CategoryHome from '../pages/category/CategoryHome';
 import SubHome from '../components/sub/SubHome';
 import Shop from '../pages/Shop';
+import Cart from '../pages/Cart';
+import Promise from '../components/cards/Promise';
+import SideDrawer from '../components/drawer/SideDrawer';
+import Checkout from '../pages/Checkout';
 
 const Routes = () => {
   return (
     <>
       <Navbar />
+      <SideDrawer />
       <Switch>
         <Route exact path={['/', '/home']} component={Home} />
         <Route exact path={'/login'} component={Login} />
@@ -36,7 +41,9 @@ const Routes = () => {
         <Route exact path={'/product/:slug'} component={Product} />
         <Route exact path={'/register/complete'} component={Complete} />
         <Route exact path={'/forgot/password'} component={ForgotPassword} />
-        <Route exact path={'/category/:slug'} component={CategoryHome} />
+
+        <Route exact path={'/checkout'} component={Checkout} />
+        <Route exact path={'/cart'} component={Cart} />
         <Route exact path={'/shop'} component={Shop} />
         <AdminRoute exact path={'/admin/category'} component={CategoryCreate} />
         <AdminRoute exact path={'/sub/:slug'} component={SubHome} />
@@ -65,6 +72,7 @@ const Routes = () => {
           <Route exact path={'/user/history'} component={History} />
           <Route exact path={'/user/wishlist'} component={WishList} />
           <Route exact path={'/user/password'} component={Password} />
+          <Route exact path={'/category/:slug'} component={CategoryHome} />
         </UserRoute>
       </Switch>
     </>

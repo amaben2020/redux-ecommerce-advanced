@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu } from 'antd';
+import { Menu, Badge } from 'antd';
 import {
   UserOutlined,
   AppstoreOutlined,
@@ -7,6 +7,7 @@ import {
   SettingOutlined,
   LogoutOutlined,
   ShoppingOutlined,
+  ShoppingCartOutlined,
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,7 +19,7 @@ const Navbar = () => {
   const { SubMenu, Item } = Menu;
 
   //const { user } = useSelector((state) => state.user);
-  const { user } = useSelector((state) => ({ ...state }));
+  const { user, cart } = useSelector((state) => ({ ...state }));
 
   const dispatch = useDispatch();
 
@@ -46,6 +47,15 @@ const Navbar = () => {
         </Item>
         <Item key="shop" icon={<ShoppingOutlined />}>
           <Link to="/shop"> Shop </Link>
+        </Item>
+
+        <Item key="cart" icon={<ShoppingCartOutlined />}>
+          <Link to="/cart">
+            {' '}
+            <Badge count={cart.length} offset={[11, 0]}>
+              Cart
+            </Badge>
+          </Link>
         </Item>
         {!user && (
           <Item

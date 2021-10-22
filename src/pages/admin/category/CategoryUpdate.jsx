@@ -7,7 +7,6 @@ import CategoryForm from '../../../components/forms/CategoryForm';
 const CategoryUpdate = ({ history, match }) => {
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
-
   const { user } = useSelector((state) => ({ ...state }));
 
   const loadCategory = () => {

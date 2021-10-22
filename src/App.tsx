@@ -16,7 +16,7 @@ const App = () => {
     //onAuthStateChanged exposes us to the user information
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
-        //getIdTokenResult gives us the userToken
+        ////////////getIdTokenResult gives us the userToken
         const idTokenResult = await user.getIdTokenResult();
         currentUser(idTokenResult.token)
           .then((res: any) => {

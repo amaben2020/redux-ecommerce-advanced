@@ -37,7 +37,6 @@ const Login = ({ history }) => {
   const roleBasedRedirect = (res) => {
     //check if intended
     let intended = history.location.state;
-
     if (intended) {
       history.push(intended.from);
     } else {

@@ -22,7 +22,6 @@ const ProductCreate = ({ history }) => {
 
   const loadAllCategories = async () => {
     const value = await getCategories();
-
     //giving categories the array valus so it could be associated
     setValues({ ...values, categories: value.data });
   };
