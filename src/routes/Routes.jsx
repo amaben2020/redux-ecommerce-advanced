@@ -28,6 +28,8 @@ import Cart from '../pages/Cart';
 import Promise from '../components/cards/Promise';
 import SideDrawer from '../components/drawer/SideDrawer';
 import Checkout from '../pages/Checkout';
+import CreateCouponPage from '../pages/admin/coupon/CreateCouponPage';
+import Payment from '../pages/Payment';
 
 const Routes = () => {
   return (
@@ -67,8 +69,10 @@ const Routes = () => {
         />
 
         <AdminRoute exact path={'/admin/sub'} component={SubCreate} />
+        <AdminRoute exact path={'/admin/coupon'} component={CreateCouponPage} />
 
         <UserRoute>
+          <Route exact path={'/payment'} component={Payment} />
           <Route exact path={'/user/history'} component={History} />
           <Route exact path={'/user/wishlist'} component={WishList} />
           <Route exact path={'/user/password'} component={Password} />

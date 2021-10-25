@@ -10,8 +10,6 @@ import { currentUser } from './utils/auth';
 const App = () => {
   const dispatch = useDispatch();
 
-  //This useEffect simply puts the user details when the app lunches, it automatically tries to login a user if logged out
-
   useEffect(() => {
     //onAuthStateChanged exposes us to the user information
     const unsubscribe = auth.onAuthStateChanged(async (user) => {

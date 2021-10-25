@@ -43,20 +43,20 @@ const Shop = () => {
 
   //state.search is the store name of the reducer, while state.search.text is the payload you search products with
   let { text } = useSelector((state) => state.search.text);
-  const { SubMenu, ItemGroup } = Menu;
+  const { SubMenu } = Menu;
   let dispatch = useDispatch();
 
   //load products on page load
-  const loadAllProducts = (number, setter) => {
+  const loadAllProducts = (number) => {
+    setLoading(true);
     getProductsByCount(number).then((p) => {
-      setter(p.data);
+      setProducts(p.data);
       setLoading(false);
     });
   };
 
   useEffect(() => {
-    loadAllProducts(12, setProducts);
-
+    loadAllProducts(12);
     //fetch categories
     const getAllCategories = async (promise) => {
       try {
@@ -67,7 +67,6 @@ const Shop = () => {
       }
     };
     getAllCategories(getCategories());
-
     //fetching the subs and putting them in state
     getSubs().then((res) => setSubs(res.data));
   }, []);
@@ -75,7 +74,8 @@ const Shop = () => {
   //  function to query database
   const fetchProducts = (arg) => {
     fetchProductsByFilter(arg).then((res) => {
-      setProducts(res.data);
+      console.log('RESPONSE ON FETCH', res.data);
+      return setProducts(res.data);
     });
   };
 
@@ -106,8 +106,8 @@ const Shop = () => {
   }, [ok, price]);
 
   const handleSlider = (value) => {
-    dispatch({ type: 'SEARCH_QUERY', payload: { text: '' } });
     setPrice(value);
+    dispatch({ type: 'SEARCH_QUERY', payload: { text: '' } });
     setCategoryIds([]);
     setStar('');
     setSub('');
@@ -146,12 +146,12 @@ const Shop = () => {
     setSub('');
     setBrand('');
     setShipping('');
-    console.log(e.target.value);
+
     let inTheState = [...categoryIds];
     let justChecked = e.target.value;
     //gets the index of the selected element i.e idx:  2, 0, -1 ... or -1
     let foundInTheState = inTheState.indexOf(justChecked);
-    console.log(foundInTheState);
+
     //if not found return -1 else return index
 
     //user havent checked that category yet
@@ -166,6 +166,8 @@ const Shop = () => {
     }
     //contains no duplicate of what the user clicked
     setCategoryIds(inTheState);
+    console.log(inTheState);
+
     fetchProducts({ category: inTheState });
   };
 
@@ -234,8 +236,9 @@ const Shop = () => {
 
   //show products based on brands name
   const showBrands = () =>
-    brands.map((b) => (
+    brands.map((b, i) => (
       <Radio
+        key={i}
         value={b}
         name={b}
         checked={b === brand}
@@ -257,8 +260,8 @@ const Shop = () => {
   };
 
   const showColors = () => {
-    return colors.map((c) => (
-      <Radio checked={c === color} value={c} onChange={handleColor}>
+    return colors.map((c, i) => (
+      <Radio key={i} checked={c === color} value={c} onChange={handleColor}>
         {c}
       </Radio>
     ));
@@ -324,7 +327,10 @@ const Shop = () => {
         <div className="col-md-3 pt-2">
           <h4>Search/Filter</h4>
           <hr />
-          <Menu mode="inline" defaultOpenKeys={['1', '2', '3', '4', '5']}>
+          <Menu
+            mode="inline"
+            defaultOpenKeys={['1', '2', '3', '4', '5', '6', '7']}
+          >
             <SubMenu
               key="1"
               title={
@@ -401,7 +407,7 @@ const Shop = () => {
 
             {/**Color */}
             <SubMenu
-              key="5"
+              key="6"
               title={
                 <span className="h6">
                   {' '}
@@ -416,7 +422,7 @@ const Shop = () => {
 
             {/**Shipping */}
             <SubMenu
-              key="5"
+              key="7"
               title={
                 <span className="h6">
                   {' '}
@@ -443,7 +449,7 @@ const Shop = () => {
           <div className="row">
             {products.map((p) => (
               <div key={p._id} className="col-md-4 mt-3">
-                <ProductCard product={p} />
+                {loading ? <p>Loading...</p> : <ProductCard product={p} />}
               </div>
             ))}
           </div>

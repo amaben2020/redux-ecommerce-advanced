@@ -16,7 +16,7 @@ export const userCart = async (cart, authToken) => {
 export const saveUserAddress = async (authToken, address) => {
   //cart is wrapped in object cos we are accessing it as req.body.cart not just req.body
   return await axios.post(
-    `${process.env.REACT_APP_API}/user/cart`,
+    `${process.env.REACT_APP_API}/user/address`,
     { address },
     {
       headers: {
@@ -43,3 +43,14 @@ export const emptyUserCart = async (authToken) => {
     },
   });
 };
+
+export const applyCoupon = async (authToken, coupon) =>
+  await axios.post(
+    `${process.env.REACT_APP_API}/user/cart/coupon`,
+    { coupon },
+    {
+      headers: {
+        authToken,
+      },
+    }
+  );
